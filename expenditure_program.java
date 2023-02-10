@@ -21,6 +21,18 @@ public class expenditure_program{
             l1.setHorizontalAlignment(JLabel.CENTER);
             l1.setSize(1000,100);
             f1.add(l1);
+
+            JLabel parts=new JLabel("Particular:");
+            parts.setBounds(15,100,200,20);
+            JTextField particulars=new JTextField("Enter particular name");
+            particulars.setBounds(80, 100, 200, 20);
+            f1.add(particulars);
+            f1.add(parts);
+
+            JButton sub=new JButton("Submit");
+            sub.setBounds(10,130,95,20);
+            f1.add(sub);
+            
             f1.setVisible(true);
             con.close();
         }
