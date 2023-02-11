@@ -24,14 +24,37 @@ public class expenditure_program{
 
             JLabel parts=new JLabel("Particular:");
             parts.setBounds(15,100,200,20);
+
             JTextField particulars=new JTextField("Enter particular name");
             particulars.setBounds(80, 100, 200, 20);
             f1.add(particulars);
             f1.add(parts);
 
+            JLabel rt=new JLabel("Rate:");
+            rt.setBounds(15,140,200,20);
+            f1.add(rt);
+
+            JTextField rate=new JTextField("Enter rate of product");
+            rate.setBounds(80,140,200,20);
+            f1.add(rate);
+
             JButton sub=new JButton("Submit");
-            sub.setBounds(10,130,95,20);
+            sub.setBounds(10,200,95,20);
+            sub.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    System.out.println(particulars.getText());
+                }
+            });
             f1.add(sub);
+
+            JButton view= new JButton("View Transactions");
+            view.setBounds(140,200,200,20);
+            view.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    System.out.println("Transactions Generating...");
+                }
+            });
+            f1.add(view);
             
             f1.setVisible(true);
             con.close();
