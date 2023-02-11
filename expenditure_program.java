@@ -3,8 +3,53 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.*;
+import javax.swing.table.DefaultTableModel;
 
 public class expenditure_program {
+    public static void createTable(Connection con){
+        JFrame frame;
+        JTabbedPane myListTabs=null;
+        frame=new JFrame("All Transactions");
+        myListTabs=new JTabbedPane();
+
+        JTable myComicsTable=null;
+        DefaultTableModel model=new DefaultTableModel();
+        myComicsTable = new JTable(model);
+        myComicsTable.setPreferredScrollableViewportSize(new Dimension(750,110));
+        myComicsTable.setFillsViewportHeight(true);
+        /* myComicsTable.setFillsViewportHeight(true); */
+
+        Statement stmt;
+        try {
+            stmt=con.createStatement();
+            String query="select * from expenditure ";
+            ResultSet rs=stmt.executeQuery(query);
+            ResultSetMetaData rsmd=rs.getMetaData();
+            int col=rsmd.getColumnCount();
+            String[] colName=new String[col];
+            for(int i=0;i<col;i++){
+                colName[i]=rsmd.getColumnName(i+1);
+            }
+            model.setColumnIdentifiers(colName);
+            while(rs.next()){
+                String name=rs.getString(1);
+                String rate=Integer.toString(rs.getInt(2));
+                String[] row={name,rate};
+                model.addRow(row);
+            }
+            myComicsTable.setDefaultEditor(Object.class, null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        JScrollPane scrollPane=new JScrollPane(myComicsTable);
+        scrollPane.setPreferredSize(new Dimension(600,110));
+        frame.getContentPane().add(myListTabs);
+        frame.pack();
+        frame.setBounds(500, 150, 950, 250);
+        frame.add(scrollPane,BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
     public static void main(String[] args) {
         try {
             Connection con;
@@ -87,7 +132,8 @@ public class expenditure_program {
             view.setBounds(140, 200, 200, 20);
             view.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Transactions Generating...");
+                    System.out.println("Rendering table...");
+                    createTable(con);
                 }
             });
             f1.add(view);
